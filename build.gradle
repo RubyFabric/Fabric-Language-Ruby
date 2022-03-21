@@ -84,7 +84,7 @@ publishing {
     repositories {
         if (ENV.MAVEN_PUBLISH_TOKEN) {
             maven {
-                url 'https://repsy.io/mvn/distant/rubyfabric/'
+                url 'https://repo.repsy.io/mvn/distant/rubyfabric'
                 credentials {
                     username ENV.MAVEN_PUBLISH_USERNAME
                     password ENV.MAVEN_PUBLISH_TOKEN
