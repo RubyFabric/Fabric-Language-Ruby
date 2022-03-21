@@ -11,6 +11,8 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+def ENV = System.getenv()
+
 repositories {
     mavenCentral()
     maven {
@@ -63,12 +65,34 @@ jrubyJar {
 // configure the maven publication
 publishing {
     publications {
-        mavenJava(MavenPublication) { publication ->
-
+        mavenJava(MavenPublication) {
+            artifact(shadowJar)
+            artifact(sourcesJar)
+            pom.withXml {
+                subprojects.each {
+                    if (it.name != project.testmods_project) {
+                        depNode.appendNode("groupId", it.group)
+                        depNode.appendNode("artifactId", it.name)
+                        depNode.appendNode("version", it.version)
+                        depNode.appendNode("scope", "compile")
+                    }
+                }
+            }
         }
     }
 
     repositories {
-
+        if (ENV.MAVEN_PUBLISH_TOKEN) {
+            maven {
+                url 'https://repsy.io/mvn/distant/rubyfabric/'
+                credentials {
+                    username ENV.MAVEN_PUBLISH_USERNAME
+                    password ENV.MAVEN_PUBLISH_TOKEN
+                }
+                authentication {
+                    basic(BasicAuthentication)
+                }
+            }
+        }
     }
 }
