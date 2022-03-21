@@ -1,21 +1,17 @@
 {
   "schemaVersion": 1,
-  "id": "fabric-language-kotlin",
+  "id": "fabric-language-ruby",
   "version": "$version",
-  "name": "Fabric Language Kotlin",
-  "description": "Fabric language module for Kotlin.",
+  "name": "Fabric Language Ruby",
+  "description": "Fabric language module for Ruby.",
   "authors": [
-    "Nikky"
+    "PseudoDistant"
   ],
   "contact": {
-    "homepage": "https://minecraft.curseforge.com/projects/fabric-language-kotlin",
-    "irc": "irc://irc.esper.net:6667/fabric",
-    "issues": "https://github.com/FabricMC/fabric-language-kotlin/issues",
-    "sources": "https://github.com/FabricMC/fabric-language-kotlin"
   },
   "languageAdapters": {
-    "kotlin": "net.fabricmc.language.kotlin.KotlinAdapter"
+    "ruby": "io.github.rubyfabric.language.ruby.RubyAdapter"
   },
   "license": "Apache-2.0",
-  "icon": "assets/fabric-language-kotlin/icon500.png"
+  "icon": "assets/fabric-language-ruby/rubbie.png"
 }
