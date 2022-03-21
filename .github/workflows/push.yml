@@ -17,4 +17,4 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: 'Build'
-        run: ./gradlew build --stacktrace --warning-mode=fail
+        run: ./gradlew shadowJar --stacktrace
