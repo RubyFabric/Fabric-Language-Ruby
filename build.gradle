@@ -1,0 +1,74 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+    id "com.github.jruby-gradle.base" version "2.1.0-alpha.2"
+    id "com.github.jruby-gradle.core" version "2.1.0-alpha.2"
+    id "com.github.jruby-gradle.jar" version "2.1.0-alpha.1"
+    id 'maven-publish'
+    id 'java'
+}
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+    mavenCentral()
+    maven {
+        url = "https://maven.fabricmc.net/"
+    }
+}
+
+configurations {
+    shade
+}
+
+dependencies {
+    implementation "net.fabricmc:fabric-loader:$loader_version"
+
+    shade implementation("org.jruby:jruby-complete:$jruby_version")
+}
+
+java {
+    withSourcesJar()
+}
+
+shadowJar {
+    dependsOn(jar)
+    configurations = [project.configurations.shade]
+    archiveClassifier.set('dev')
+
+
+
+    exclude 'org/objectweb/**/*'
+}
+
+build.dependsOn(shadowJar)
+
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jrubyJar {
+    initScript "${projectDir}/src/main/java/RubyAdapter.rb"
+}
+
+// configure the maven publication
+publishing {
+    publications {
+        mavenJava(MavenPublication) { publication ->
+
+        }
+    }
+
+    repositories {
+
+    }
+}
